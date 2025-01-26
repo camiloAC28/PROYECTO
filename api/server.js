@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 
 
 const db = mysql.createConnection({
-    host: 'localhost',       
-    user: 'root',     
+    host: 'localhost',
+    user: 'root',
     password: '',
     database: 'proyecto_finanza'
 });
@@ -48,6 +48,19 @@ app.post('/api/usuarios', (req, res) => {
     });
 });
 
+
+app.get('usuarios', (req, res) => {
+    const query = 'SELECT * FROM usuarios;';
+    conexion.query(query, (error, resultado) => {
+        if (error) return console.error(error.message);
+
+        if (resultado.length > 0) {
+            res.json(resultado);
+        } else {
+            res.json('No hay usuarios')
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log(`Servidor ejecutándose en http://localhost:${port}`);
